@@ -1,0 +1,15 @@
+---
+title: "p8105_hw3_nw2614"
+author: "Natasha Woon"
+date: "2026-10-13"
+output: github_document
+---
+
+Load Packages
+
+```{r, message = F}
+library(tidyverse)
+library(p8105.datasets)
+data("ny_noaa")
+```
+
