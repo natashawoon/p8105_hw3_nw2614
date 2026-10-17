@@ -140,4 +140,19 @@ snowfalldis_plot
 tmaxvstmin_plot / snowfalldis_plot
 ```
 
+# Problem 2
+
+```{r}
+demographics_df = 
+  read_csv(file = "data/nhanes_covar.csv",
+           skip = 4,
+           na = c("", "NA", ".")) |>
+  janitor::clean_names()
+
+accelerometer_df = 
+  read_csv(file = "data/nhanes_accel.csv",
+           na = c("", "NA", ".")) |> 
+  janitor::clean_names() 
+        
+```
 
