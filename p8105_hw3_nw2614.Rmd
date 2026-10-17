@@ -10,6 +10,46 @@ Load Packages
 ```{r, message = F}
 library(tidyverse)
 library(p8105.datasets)
-data("ny_noaa")
 ```
+
+# Problem 1
+
+Loading Data
+
+```{r}
+data = ("ny_noaa")
+```
+
+Counting Missing Values 
+
+```{r}
+ny_noaa |>
+  summarize(
+    missing_id = sum(is.na(id)) / nrow(ny_noaa) * 100,
+    missing_date = sum(is.na(date)) / nrow(ny_noaa) * 100,
+    missing_prcp = sum(is.na(prcp)) / nrow(ny_noaa) * 100,
+    missing_snow = sum(is.na(snow)) / nrow(ny_noaa) * 100,
+    missing_snwd = sum(is.na(snwd)) / nrow(ny_noaa) * 100,
+    missing_tmax = sum(is.na(tmax)) / nrow(ny_noaa) * 100,
+    missing_tmin = sum(is.na(tmin)) / nrow(ny_noaa) * 100
+  )
+```
+
+This NOAA data set has `r nrow(ny_noaa)` observations anf `r ncol(ny_noaa)` variables. The variables in the data set include  `id`, `date`, `prcp`, `snow`, `snwd`, `tmax`, and `tmin`, which provides information on weather station ID numbers, the date of observation, precipitation (in tenths of mm), snowfall (mm), snow depth(mm), and the maximum and minimum temperatures (in tenths of degrees C). Since there are many different weather stations, and that each weather station may only collect a subset of the variables, the data set has a lot of missing data. Upon investigation, it is clear that the maximum and minimum temperature data is extensively missing, with `r sum(is.na(ny_noaa$tmax)) / nrow(ny_noaa) * 100` % of observations missing for maximum temperatures and `r sum(is.na(ny_noaa$tmin)) / nrow(ny_noaa) * 100`% for minimum temperatures. Snow depth also had a good amount of missing observations, with `r sum(is.na(ny_noaa$snwd)) / nrow(ny_noaa) * 100`% of observations missing. 
+
+Cleaning the data set 
+
+```{r}
+ny_noaa_df = 
+  ny_noaa |> 
+  mutate(
+    month = lubridate::month(date), 
+    year = lubridate::year(date), 
+    day = lubridate::day(date), 
+    tmax = as.numeric(tmax) / 10, 
+    tmin = as.numeric(tmin) / 10, 
+    prcp = prcp / 10 
+  )
+```
+
 
