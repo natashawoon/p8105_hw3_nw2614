@@ -142,6 +142,8 @@ tmaxvstmin_plot / snowfalldis_plot
 
 # Problem 2
 
+Importing Data
+
 ```{r}
 demographics_df = 
   read_csv(file = "data/nhanes_covar.csv",
@@ -154,5 +156,24 @@ accelerometer_df =
            na = c("", "NA", ".")) |> 
   janitor::clean_names() 
         
+```
+
+Cleaning and Merging Data
+
+```{r}
+demographics_df_clean = 
+  demographics_df |>
+  filter(age >= 21) |>
+  drop_na() |>
+  mutate(
+    sex = factor(sex,
+                 levels = c(1, 2),
+                 labels = c("Male", "Female")),
+    education = factor(education, 
+                       levels = c(1, 2, 3),
+                       labels = c("Less than high school",
+                                  "High school equivalent",
+                                  "More than high school"))
+  )
 ```
 
